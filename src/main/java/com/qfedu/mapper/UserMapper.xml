@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qfedu.dao.UserDao">
+
+    <select id="findByCode" parameterType="string" resultType="user">
+        select * from t_user where bank_code = #{bankCode}
+    </select>
+    <select id="findByPass" parameterType="string" resultType="user">
+        select * from t_user where password = #{password}
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update t_user
+        <set>
+            <if test="bankCode != null">
+                bank_code = #{bankCode},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="balance != null">
+                balance = #{balance},
+            </if>
+            <if test="state != null">
+                state = #{state}
+            </if>
+        </set>
+        where uid = #{uid}
+    </update>
+</mapper>

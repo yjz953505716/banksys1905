@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+开始日期<input type="text" name="beginTime">
+结束日期<input type="text" name="endTime">
+<input type="button" value="查询" onclick="transferInfo()"><br>
+
+<table border="1px" width="600px">
+
+    <thead>
+    <tr>
+        <td>交易时间</td>
+        <td>收入</td>
+        <td>支出</td>
+        <td>交易类型</td>
+        <td>余额</td>
+        <td>备注</td>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    </tbody>
+</table>
+
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        transferInfo();
+    })
+
+    function transferInfo() {
+        $.ajax({
+            type:"get",
+            url:"transferInfo.do",
+            data:{"beginTime": $("input[name='beginTime']").val(), "endTime":$("input[name='endTime']").val()},
+            dataType:"json",
+            success:function (data) {
+                if (data.code == 0){
+                    //清空子节点
+                    $("tbody").empty();
+                    var infos = data.info;
+                    $(infos).each(function () {
+                        var html = "<tr>\n" +
+                            "        <td>" + this.createTime + "</td>\n" +
+                            "        <td>" + this.income + "</td>\n" +
+                            "        <td>" + this.output + "</td>\n" +
+                            "        <td>" + this.consumType + "</td>\n" +
+                            "        <td>" + this.balance + "</td>\n" +
+                            "        <td>" + this.comment + "</td>\n" +
+                            "    </tr>";
+                        $("tbody").append($(html));
+                    })
+                }
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

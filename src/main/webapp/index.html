@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">观澜集团银行转账系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    <span id="code"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="" onclick="exitLogin()">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item"><a href="balance.html" target="myframe">余额查询</a></li>
+                <li class="layui-nav-item"><a href="transfer.html" target="myframe">转账</a></li>
+                <li class="layui-nav-item"><a href="transferlnfo2.html" target="myframe">交易记录</a></li>
+                <li class="layui-nav-item"><a href="update-password.html" target="myframe">修改密码</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <iframe name="myframe" height="100%" width="100%"></iframe>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+<script src="layui/layui.js" type="text/javascript"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+        $.ajax({
+            url: "code.do",
+            success: function (data) {
+                $("#code").html(data.info);
+            }
+        });
+    });
+
+    function exitLogin() {
+        $.ajax({
+           url:"exitLogin.do" ,
+            success:function (data) {
+                window.location.href = "login.html";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

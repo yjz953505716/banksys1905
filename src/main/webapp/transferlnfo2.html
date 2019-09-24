@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+
+<div class="layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">开始日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="beginTime" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">结束日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="endTime" placeholder="yyyy-MM-dd">
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="layui-btn layui-btn-primary">查询</button>
+</div>
+
+
+
+<table class="layui-hide" id="demo" lay-filter="test"></table>
+
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="layui/layui.js"></script>
+
+<script>
+    layui.use(['table','laydate'], function(){
+        var table = layui.table
+            ,laydate = layui.laydate;
+
+        laydate.render({
+            elem:'#beginTime'
+        });
+        laydate.render({
+           elem:'#endTime'
+        });
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#demo'
+            ,url: 'transferInfo.do' //数据接口
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'createTime', title: '创建日期', width:200, sort: true, fixed: 'left'}
+                ,{field: 'income', title: '收入', width:80}
+                ,{field: 'output', title: '支出', width:80, sort: true}
+                ,{field: 'consumType', title: '消费类型', width:120, sort: true}
+                ,{field: 'balance', title: '余额', width:80, sort: true}
+                ,{field: 'comment', title: '备注', width:80, sort: true}
+            ]]
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form method="post" onsubmit="return false">
+        卡号<input type="text" name="code"><br>
+        密码<input type="password" name="password"><br>
+        <input type="submit" value="登录">
+    </form>
+
+    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript">
+
+        $("form").submit(function () {
+            $.ajax({
+                type:"post",
+                url:"login.do",
+                data:$("form").serialize(),
+                dataType:"json",
+                success:function(data){
+                    if (data.code == 0){
+                        window.location.href = "index.html";
+                    } else {
+                        alert(data.info);
+                    }
+                },
+                error:function(){
+                    alert("ajax请求异常");
+                }
+            });
+            return false;
+        })
+    </script>
+
+</body>
+</html>

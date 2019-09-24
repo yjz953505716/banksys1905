@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <form>
+        卡号<input type="text" name="otherCode"><br>
+        金额<input type="text" name="money"><br>
+        <input type="submit" value="转账">
+    </form>
+</div>
+
+
+<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+
+<script type="text/javascript">
+
+    $("form").submit(function () {
+        $.ajax({
+            type:"post",
+            url:"transfer.do",
+            data:$("form").serialize(),
+            dataType:"json",
+            success:function (data) {
+                alert(data.info);
+            }
+        });
+
+        return false;
+    })
+</script>
+</body>
+</html>

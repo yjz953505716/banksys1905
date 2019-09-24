@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 扫描控制器的注解 -->
+    <!--  可以指定多个包进行扫描，多个包之间使用逗号分隔 -->
+    <!--<context:component-scan base-package="com.qfedu.controller,com.qfedu.common"></context:component-scan>-->
+
+    <!-- use-default-filters="false" 默认是true，使用默认的过滤器扫描@Controller/@Service等注解
+        设置为false，表示不使用默认的过滤器扫描注解
+        context:include-filter 设置扫描哪些注解
+        context:exclude-filter 设置不扫描哪些注解
+    -->
+    <!--<context:component-scan base-package="com.qfedu" use-default-filters="false">-->
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>-->
+        <!--<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"></context:include-filter>-->
+    <!--</context:component-scan>-->
+
+    <context:component-scan base-package="com.qfedu.controller,com.qfedu.exception"></context:component-scan>
+
+
+    <!-- 重要配置！！！ -->
+    <!--  设置转换服务/验证器 -->
+    <mvc:annotation-driven>
+        <!-- 处理json里的日期数据，默认日期被fastjson转为时间戳数据 -->
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.qfedu.common.JsonObjectMapper">
+                        <property name="dateFormat">
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--  url-pattern配置成/后，  使用如下配置将静态资源交给web服务器默认的servlet进行处理 -->
+<!--    <mvc:default-servlet-handler></mvc:default-servlet-handler>-->
+
+
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 前缀 -->
+        <property name="prefix" value="/"></property>
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp"></property>
+
+    </bean>
+</beans>

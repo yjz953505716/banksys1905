@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        账户余额：<br>
+        人民币:<span></span>￥
+    </div>
+
+<!--    <script type="text/javascript" src="js/jquery.min.js"/>-->
+
+    <script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type:"post",
+                url:"balance.do",
+                dataType:"json",
+                success:function(data){
+                    if (data.code == 0){
+                        $("span").html(data.info);
+                    } else {
+                        alert(data.info);
+                    }
+                }
+            });
+        })
+    </script>
+
+</body>
+</html>
